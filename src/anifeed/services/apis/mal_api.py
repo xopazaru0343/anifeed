@@ -1,3 +1,9 @@
+"""
+MyAnimeList REST API client.
+
+This module provides an interface to the MyAnimeList v2 REST API for fetching
+user anime lists.
+"""
 import os
 from typing import Dict, Optional
 from enum import EnumType
@@ -16,10 +22,36 @@ MAL_STATUS_MAP = {
 
 
 class MalApi(BaseApi):
+    """
+    MyAnimeList REST API client for anime data.
+
+    Provides methods for querying user anime lists from MyAnimeList using their
+    v2 REST API. Requires MAL_CLIENT_ID environment variable for authentication.
+
+    Attributes:
+        session: Configured with MAL authentication headers
+
+    Example:
+        >>> os.environ["MAL_CLIENT_ID"] = "your_client_id"
+        >>> api = MalApi()
+        >>> data = api.get_user_anime_list("username", AnimeStatus.WATCHING)
+        >>> print(data["data"])
+    """
+
     def __init__(self,
                  session=None,
                  logger=None,
                  ):
+        """
+        Initialize MAL API client with authentication.
+
+        Args:
+            session: Optional requests.Session for HTTP requests
+            logger: Optional logger instance
+
+        Note:
+            Requires MAL_CLIENT_ID environment variable to be set.
+        """
         super().__init__(
             base_url="https://api.myanimelist.net/v2",
             session=session, logger=logger
@@ -31,6 +63,28 @@ class MalApi(BaseApi):
             username: str,
             status: EnumType,
             ) -> Dict:
+        """
+        Fetch user's anime list from MAL filtered by status.
+
+        Makes a REST API call to retrieve anime entries for the specified
+        user and viewing status.
+
+        Args:
+            username: MyAnimeList username
+            status: Internal AnimeStatus enum value
+
+        Returns:
+            Raw API response as dictionary
+
+        Raises:
+            requests.HTTPError: If API request fails
+
+        Example:
+            >>> api = MalApi()
+            >>> response = api.get_user_anime_list("user123", AnimeStatus.WATCHING)
+            >>> for item in response["data"]:
+            ...     print(item["node"]["title"])
+        """
         status = self._translate_status(internal_status=status)
         payload_dict = {
             "status": status,
@@ -43,5 +97,18 @@ class MalApi(BaseApi):
         return r.json()
 
     def _translate_status(self, internal_status: AnimeStatus) -> Optional[str]:
-        """Translates the internal MediaStatus to the MAL API string."""
+        """
+        Translate internal AnimeStatus to MAL status string.
+
+        Args:
+            internal_status: Internal AnimeStatus enum
+
+        Returns:
+            MAL API status string (e.g., "watching", "completed")
+
+        Example:
+            >>> api = MalApi()
+            >>> api._translate_status(AnimeStatus.WATCHING)
+            'watching'
+        """
         return MAL_STATUS_MAP.get(internal_status)

@@ -1,3 +1,8 @@
+"""
+Nyaa.si HTML response parser.
+
+This module parses Nyaa.si search result HTML into Torrent domain objects.
+"""
 from typing import List, Dict, Any
 
 from bs4 import BeautifulSoup
@@ -7,7 +12,55 @@ from anifeed.models.torrent_model import Torrent
 
 
 class NyaaParser(BaseParser):
-    def parse_api_metadata(self, metadata: Dict[Any, Any]) -> List[Torrent]:
+    """
+    Parser for Nyaa.si HTML search results.
+
+    Scrapes Nyaa.si search result pages and extracts torrent metadata
+    into Torrent domain objects.
+
+    Example:
+        >>> parser = NyaaParser()
+        >>> html = "<html>...</html>"  # Nyaa search results
+        >>> torrents = parser.parse_api_metadata(html)
+    """
+
+    def parse_api_metadata(self, metadata: str) -> List[Torrent]:
+        """
+        Parse Nyaa.si HTML into Torrent objects.
+
+        Scrapes the search results table from Nyaa HTML and extracts
+        torrent information (title, download URL, size, seeders, leechers).
+
+        Args:
+            metadata: Raw HTML string from Nyaa.si search
+
+        Returns:
+            List of Torrent objects extracted from the HTML
+
+        Raises:
+            AttributeError: If HTML structure is unexpected (no tbody)
+
+        Example:
+            >>> parser = NyaaParser()
+            >>> html = '''
+            ... <table class="torrent-list">
+            ...   <tbody>
+            ...     <tr>
+            ...       <td></td>
+            ...       <td><a>[SubsPlease] Anime - 01 [1080p].mkv</a></td>
+            ...       <td><a href="/download/123.torrent">⬇</a></td>
+            ...       <td>1.3 GiB</td>
+            ...       <td></td>
+            ...       <td>150</td>
+            ...       <td>25</td>
+            ...     </tr>
+            ...   </tbody>
+            ... </table>
+            ... '''
+            >>> torrents = parser.parse_api_metadata(html)
+            >>> print(torrents[0].seeders)
+            150
+        """
         soup = BeautifulSoup(metadata, 'html.parser')
         res = []
         for row in soup.find('tbody').find_all('tr'):

@@ -5,3 +5,6 @@
 3. Broadcast torrents to endpoints (RSS, JSON, HTML)
 
 Project architecture is based in MVCS architecture and SOLID principles
+
+# Documentation
+https://alocks.github.io/anifeed/

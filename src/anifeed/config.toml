@@ -1,6 +1,6 @@
 [application]
 user="SakuraFreak"
-api="anilist" # Options[anilist, mal] 
+api="anilist" # Options[anilist, mal]
 [application.status]
 WATCHING = true
 COMPLETED = false
@@ -8,7 +8,7 @@ PAUSE = false
 DROPPED = false
 PLANNING = false
 
-[nyaa] 
+[nyaa]
 BATCH = ["[batch]","(batch)"] # The order of tags inside the list dictates the priority data being parsed
 FANSUB = ["[Erai-raws]", "[SubsPlease]"]  # The order of tags inside the list dictates the priority data being parsed
 RESOLUTION = ["1080p", "720p", "480p"]  # The order of tags inside the list dictates the priority data being parsed

@@ -1,6 +1,6 @@
 [build-system]
-requires = ["hatchling"]
-build-backend = "hatchling.build"
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
 
 [project]
 name = "anifeed"
@@ -32,9 +32,22 @@ dev = [
     "pytest-mock>=3.11.1",
     "uv==0.9.7",
 ]
+mkdocs = [
+    "mkdocs-material",
+    "mkdocs-gen-files",
+    "mkdocs-literate-nav",
+    "mkdocstrings[python]",
+    "mkdocstrings-python>=0.7",
+]
 
 [project.scripts]
 anifeed = "anifeed.main:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+anifeed = ["*.toml", "*.graphql", "services/apis/anilist_api/*.graphql"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

@@ -8,3 +8,5 @@ pindureta.txt
 .coverage
 htmlcov
 .pytest_cache
+site
+*.egg-info

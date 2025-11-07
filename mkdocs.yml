@@ -1,0 +1,33 @@
+site_name: AniFeed
+
+theme:
+    name: material
+
+docs_dir: docs
+
+nav:
+    - Home: index.md
+    - API Reference: reference/
+
+plugins:
+    - search
+    - literate-nav:
+        nav_file: SUMMARY.md
+    - gen-files:
+        scripts:
+            - scripts/gen_reference.py
+    - mkdocstrings:
+        handlers:
+            python:
+                import:
+                    - https://docs.python.org/3/objects.inv
+                paths: [src]
+                options:
+                    show_source: true
+                    docstring_style: google
+                    members_order: source
+                    show_root_heading: true
+                    show_symbol_type_heading: true
+                    find_stubs_package: true
+
+strict: false

@@ -91,10 +91,10 @@ def anilist_api_response():
                         {
                             "media": {
                                 "title": {
-                                    "romaji": "Shingeki no Kyojin",
-                                    "english": "Attack on Titan"
+                                    "romaji": "Yofukashi no Uta",
+                                    "english": "Call of the Night"
                                 },
-                                "episodes": 25,
+                                "episodes": 13,
                                 "status": "RELEASING"
                             }
                         }
@@ -113,11 +113,11 @@ def mal_api_response():
             {
                 "node": {
                     "id": 16498,
-                    "title": "Shingeki no Kyojin",
+                    "title": "Yofukashi no Uta",
                     "alternative_titles": {
-                        "en": "Attack on Titan"
+                        "en": "Call of the Night"
                     },
-                    "num_episodes": 25,
+                    "num_episodes": 13,
                     "status": "finished_airing"
                 }
             }
@@ -135,10 +135,10 @@ def nyaa_html_response():
             <tbody>
                 <tr>
                     <td></td>
-                    <td><a href="#">[SubsPlease] Attack on Titan - 01 [1080p].mkv</a></td>
+                    <td><a href="#">[SubsPlease] Yofukashi no Uta - 01 [1080p].mkv</a></td>
                     <td>
-                        <a href="https://nyaa.si/download/1234567.torrent">⬇</a>
-                        <a href="magnet:?xt=urn:btih:abc123">🧲</a>
+                        <a href="https://nyaa.si/download/1234567.torrent"></a>
+                        <a href="magnet:?xt=urn:btih:abc123"></a>
                     </td>
                     <td>1.3 GiB</td>
                     <td></td>
