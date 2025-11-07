@@ -1,6 +1,6 @@
 [application]
 user="SakuraFreak"
-api="anilist" # Options[anilist] TODO: MyAnimeList
+api="anilist" # Options[anilist, mal] 
 [application.status]
 WATCHING = true
 COMPLETED = false
