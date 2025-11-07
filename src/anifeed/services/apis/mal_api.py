@@ -33,8 +33,10 @@ class MalApi(BaseApi):
             ) -> Dict:
         status = self._translate_status(internal_status=status)
         payload_dict = {
-            "status": status.value,
-            "fields": "id,title,alternative_titles,status,num_episodes"
+            "status": status,
+            "fields": "id,title,alternative_titles,status,num_episodes",
+            "limit": 1000,
+            "nsfw": "true"
             }
         r = self.get(f"/users/{username}/animelist", params=payload_dict)
         r.raise_for_status()
