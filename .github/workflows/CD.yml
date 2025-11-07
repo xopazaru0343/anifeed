@@ -1,15 +1,15 @@
-name: Unit and functional tests
+name: Continuous Delivery
 
 on:
   push:
     branches: [ "master" ]
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   build:
-    name: Continuous Integration
+    name: Deploy Documentation in GH Pages
     runs-on: ubuntu-latest
 
     steps:
@@ -28,8 +28,9 @@ jobs:
         run: uv sync --extra mkdocs
 
       - name: Build Documentation
-        run: mkdocs build --clean
+        run: uv run mkdocs build --clean
 
       - name: Deploy Documentation
-        run: mkdocs gh-deploy
+        if: github.ref == 'refs/heads/master'
+        run: uv run mkdocs gh-deploy --force
 
