@@ -1,5 +1,5 @@
 from unittest.mock import patch, mock_open
-from anifeed.utils import UniversalPath, DictWrangler, TomlParser
+from anifeed.utils.commons import UniversalPath, DictWrangler, TomlParser
 
 
 class TestUniversalPath:

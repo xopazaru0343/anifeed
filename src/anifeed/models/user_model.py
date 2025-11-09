@@ -6,7 +6,7 @@ This module defines the structure for a user's complete anime collection.
 from dataclasses import dataclass
 from typing import Optional, List, Literal
 
-from anifeed.models import Anime
+from anifeed.models.anime_model import Anime
 
 
 @dataclass(frozen=True)
