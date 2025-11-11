@@ -9,10 +9,12 @@ from anifeed.models.config_model import ApplicationConfig, NyaaConfig
 @pytest.fixture
 def sample_anime():
     return Anime(
-        title_romaji="Shingeki no Kyojin",
-        title_english="Attack on Titan",
+        anime_id=1,
+        source="TestSource",
+        title_romaji="Yofukashi no Utas",
+        title_english="Call of the Night",
         status="RELEASING",
-        episodes=25
+        episodes=25,
     )
 
 
@@ -20,16 +22,20 @@ def sample_anime():
 def sample_anime_list():
     return [
         Anime(
+            anime_id=1,
+            source="TestSource",
             title_romaji="Shingeki no Kyojin",
-            title_english="Attack on Titan",
+            title_english="Call of the Night",
             status="RELEASING",
-            episodes=25
+            episodes=25,
         ),
         Anime(
+            anime_id=2,
+            source="TestSource",
             title_romaji="Kimetsu no Yaiba",
             title_english="Demon Slayer",
             status="FINISHED",
-            episodes=26
+            episodes=26,
         ),
     ]
 
@@ -37,11 +43,14 @@ def sample_anime_list():
 @pytest.fixture
 def sample_torrent():
     return Torrent(
+        torrent_id=1,
         title="[SubsPlease] Yofukashi no Uta - 01 [1080p].mkv",
         download_url="https://nyaa.si/download/1234567.torrent",
         size="1.3 GiB",
         seeders=150,
-        leechers=25
+        leechers=25,
+        anime_id=1,
+        anime_source="TestSource",
     )
 
 
@@ -49,18 +58,24 @@ def sample_torrent():
 def sample_torrent_list():
     return [
         Torrent(
+            torrent_id=1,
             title="[SubsPlease] Yofukashi no Uta - 01 [1080p].mkv",
             download_url="https://nyaa.si/download/1234567.torrent",
             size="1.3 GiB",
             seeders=150,
-            leechers=25
+            leechers=25,
+            anime_id=1,
+            anime_source="TestSource",
         ),
         Torrent(
+            torrent_id=2,
             title="[Erai-raws] Yofukashi no Uta - 01 [720p].mkv",
             download_url="https://nyaa.si/download/1234568.torrent",
             size="800 MiB",
             seeders=80,
-            leechers=10
+            leechers=10,
+            anime_id=1,
+            anime_source="TestSource",
         ),
     ]
 

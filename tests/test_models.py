@@ -10,11 +10,15 @@ from anifeed.constants.nyaa_search_enum import NyaaFilter, NyaaCategory, NyaaOrd
 class TestAnimeModel:
     def test_anime_creation(self):
         anime = Anime(
+            anime_id=1,
+            source="TestSource",
             title_romaji="Test Anime",
             title_english="Test Anime EN",
             status="RELEASING",
             episodes=12
         )
+        assert anime.anime_id == 1
+        assert anime.source == "TestSource"
         assert anime.title_romaji == "Test Anime"
         assert anime.title_english == "Test Anime EN"
         assert anime.status == "RELEASING"
@@ -22,25 +26,30 @@ class TestAnimeModel:
 
     def test_anime_optional_episodes(self):
         anime = Anime(
-            title_romaji="Test",
-            title_english="Test EN",
-            status="RELEASING"
+            anime_id=1,
+            source="TestSource",
+            title_romaji="Test Anime",
+            title_english="Test Anime EN",
+            status="RELEASING",
         )
         assert anime.episodes is None
 
     def test_anime_immutability(self):
         anime = Anime(
-            title_romaji="Test",
-            title_english="Test EN",
-            status="RELEASING"
+            anime_id=1,
+            source="TestSource",
+            title_romaji="Test Anime",
+            title_english="Test Anime EN",
+            status="RELEASING",
+            episodes=12
         )
         with pytest.raises(AttributeError):
             anime.title_romaji = "New Title"
 
     def test_anime_equality(self):
-        anime1 = Anime("Title", "Title EN", "RELEASING", 12)
-        anime2 = Anime("Title", "Title EN", "RELEASING", 12)
-        anime3 = Anime("Other", "Other EN", "FINISHED", 24)
+        anime1 = Anime(1, "TestSource", "Title", "Title EN", "RELEASING", 12)
+        anime2 = Anime(1, "TestSource", "Title", "Title EN", "RELEASING", 12)
+        anime3 = Anime(2, "TestSource", "Other", "Other EN", "FINISHED", 24)
 
         assert anime1 == anime2
         assert anime1 != anime3
@@ -49,12 +58,14 @@ class TestAnimeModel:
 class TestTorrentModel:
     def test_torrent_creation(self):
         torrent = Torrent(
+            torrent_id=1,
             title="Test Torrent",
             download_url="https://example.com/torrent",
             size="1.5 GiB",
             seeders=100,
             leechers=50
         )
+        assert torrent.torrent_id == 1
         assert torrent.title == "Test Torrent"
         assert torrent.download_url == "https://example.com/torrent"
         assert torrent.size == "1.5 GiB"
@@ -62,14 +73,14 @@ class TestTorrentModel:
         assert torrent.leechers == 50
 
     def test_torrent_immutability(self):
-        torrent = Torrent("Title", "url", "1GB", 10, 5)
+        torrent = Torrent(1, "Title", "url", "1GB", 10, 5)
         with pytest.raises(AttributeError):
             torrent.seeders = 20
 
     def test_torrent_equality(self):
-        t1 = Torrent("Title", "url", "1GB", 10, 5)
-        t2 = Torrent("Title", "url", "1GB", 10, 5)
-        t3 = Torrent("Other", "url2", "2GB", 20, 10)
+        t1 = Torrent(1, "Title", "url", "1GB", 10, 5)
+        t2 = Torrent(1, "Title", "url", "1GB", 10, 5)
+        t3 = Torrent(2, "Other", "url2", "2GB", 20, 10)
 
         assert t1 == t2
         assert t1 != t3
