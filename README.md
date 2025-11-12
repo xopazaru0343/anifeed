@@ -25,7 +25,7 @@ https://alocks.github.io/anifeed/
     - [ ] Workflows for the controller using existing services
     - [ ] Create service to filter data given from similarity_service
     - [ ] Create DTO for similarity_service and replace returned value from compute()
-- [ ] Create SQlite database for caching
-  - [ ] Connection class
-  - [ ] Create the database model
-  - [ ] CRUD for anime entries
+- [x] Create SQlite database for caching
+  - [x] Connection class
+  - [x] Create the database model
+  - [x] CRUD for anime entries

@@ -66,12 +66,13 @@ class NyaaParser(BaseParser):
         res = []
         for row in soup.find('tbody').find_all('tr'):
             content = row.find_all("td")
-            links = [x["href"] for x in content[2].find_all("a")]
+            url_link = [x["href"] for x in content[1].find_all("a")]
+            download_links = [x["href"] for x in content[2].find_all("a")]
             res.append(
                 Torrent(
-                    torrent_id=re.search("([0-9]+).torrent", links[0]).group(1),
+                    torrent_id=re.search("/view/([0-9]+)", url_link[0]).group(1),
                     title=content[1].text.replace("\n", ""),
-                    download_url=links[0],
+                    download_url=download_links[0],
                     size=content[3].text,
                     seeders=int(content[5].text),
                     leechers=int(content[6].text),

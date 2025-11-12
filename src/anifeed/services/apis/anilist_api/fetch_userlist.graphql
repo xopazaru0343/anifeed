@@ -3,6 +3,7 @@ MediaListCollection(userName: $userName, type: ANIME, status: $status) {
     lists {
       entries {
         media {
+          id
           title {
             romaji
             english

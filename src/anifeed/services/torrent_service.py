@@ -81,5 +81,5 @@ class TorrentService:
         self.logger.debug("Searching torrents: %s", query)
         raw_html = self._api.fetch_search_result(params=params)
         torrents = self._parser.parse_api_metadata(metadata=raw_html)
-        self.logger.info("Found %d torrents", len(torrents))
+        self.logger.info("Found %d torrents for %s", len(torrents), query)
         return torrents

@@ -1,8 +1,9 @@
 from dataclasses import dataclass
 import logging
 
-from anifeed.db.repositories.torrent_repository import TorrentRepository
-from anifeed.db.repositories.anime_repository import AnimeRepository
+from anifeed.db.repositories.sqlite_torrent_repository import SQLiteTorrentRepository, TorrentRepository
+from anifeed.db.repositories.sqlite_anime_repository import SQLiteAnimeRepository, AnimeRepository
+from anifeed.db.database import get_connection, init_db
 from anifeed.models.config_model import ApplicationConfig
 from anifeed.services.anime_service import AnimeService
 from anifeed.services.torrent_service import TorrentService
@@ -10,6 +11,7 @@ from anifeed.services.similarity_service import SimilarityService
 from anifeed.constants.anime_status_enum import AnimeStatus
 from anifeed.constants.app_config import load_application_config
 from anifeed.utils.log_utils import configure_root_logger, get_logger
+from anifeed.utils.commons import UniversalPath
 from anifeed.exceptions import AnifeedError
 
 
@@ -19,23 +21,25 @@ class Application:
     anime_service: AnimeService
     torrent_service: TorrentService
     similarity_service: SimilarityService
-    config: ApplicationConfig 
+    config: ApplicationConfig
     animerec: AnimeRepository
     torrentrec: TorrentRepository
+
 
 def build_app() -> Application:
     configure_root_logger(level=logging.INFO)
     logger = get_logger(__name__)
     config = load_application_config()
-
+    db_path = UniversalPath("database.db")
+    init_db(db_path)
     return Application(
         logger=logger,
         anime_service=AnimeService(source=config.api),
         torrent_service=TorrentService(),
         similarity_service=SimilarityService(),
         config=config,
-        animerec=AnimeRepository(),
-        torrentrec=TorrentRepository()
+        animerec=SQLiteAnimeRepository(connection=get_connection(db_path=db_path)),
+        torrentrec=SQLiteTorrentRepository(connection=get_connection(db_path=db_path))
     )
 
 
@@ -46,25 +50,18 @@ def main():
             username=app.config.user,
             status=AnimeStatus.COMPLETED
         )
-        
-        if animes:
-            app.logger.info("%s", animes[0])
-            
-            app.animerec.save_batch(animes)
-            animelisttest = app.animerec.load()
-            torrents = list()
-            for anime in range(4):
-                torrents.append(app.torrent_service.search(
-                query=animes[anime].title_english or animes[anime].title_romaji
-            ))
 
-            if torrents:
-                app.logger.info("%s", torrents[0][0])
-                for i in range(4):
-                    app.torrentrec.save_batch(torrents[i], animes[i].anime_id, animes[i].source)
-                torrentlisttest = app.torrentrec.load()
-                for _ in range(5):
-                    print("debug")
+        if animes:
+            app.animerec.save_batch(animes)
+            app.animerec.load()
+            torrents = list()
+            for anime in animes:
+                torrents.append(app.torrent_service.search(
+                    query=anime.title_english or anime.title_romaji))
+
+        if torrents:
+            torrents = [item for sublist in torrents for item in sublist]
+            app.torrentrec.save_batch(torrents)
 
     except AnifeedError as e:
         app.logger.error("Application error: %s", e)

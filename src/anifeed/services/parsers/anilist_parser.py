@@ -59,6 +59,8 @@ class AniListParser(BaseParser):
             data=metadata, target_key="entries")
         res = [
             Anime(
+                anime_id=DictWrangler.find_value_recursively(x, "id"),
+                source=AniListParser.__class__.__name__,
                 title_romaji=DictWrangler.find_value_recursively(x, "romaji"),
                 title_english=DictWrangler.find_value_recursively(x, "english"),
                 episodes=DictWrangler.find_value_recursively(x, "episodes"),
