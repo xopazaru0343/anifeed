@@ -54,14 +54,10 @@ def main():
         if animes:
             app.animerec.save_batch(animes)
             app.animerec.load()
-            torrents = list()
             for anime in animes:
-                torrents.append(app.torrent_service.search(
-                    query=anime.title_english or anime.title_romaji))
-
-        if torrents:
-            torrents = [item for sublist in torrents for item in sublist]
-            app.torrentrec.save_batch(torrents)
+                torrents = app.torrent_service.search(query=anime.title_romaji)
+                app.torrentrec.save_batch(torrents=torrents, anime_id=anime.anime_id, anime_source=anime.source)
+                break
 
     except AnifeedError as e:
         app.logger.error("Application error: %s", e)

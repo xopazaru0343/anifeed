@@ -62,7 +62,5 @@ def torrent_to_params(torrent: Torrent) -> tuple:
         torrent.download_url,
         torrent.size,
         torrent.seeders,
-        torrent.leechers,
-        torrent.anime_id,
-        torrent.anime_source,
+        torrent.leechers
     )

@@ -27,7 +27,7 @@ class AnimeRepository(Protocol):
 class TorrentRepository(Protocol):
     """Optional cache/history port for torrents."""
 
-    def save_batch(self, torrents: Sequence[Torrent]) -> None:
+    def save_batch(self, torrents: Sequence[Torrent], anime_id: int, anime_source: str) -> None:
         """Persist a batch of Torrent records (insert or update)."""
         ...
 

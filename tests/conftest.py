@@ -49,8 +49,6 @@ def sample_torrent():
         size="1.3 GiB",
         seeders=150,
         leechers=25,
-        anime_id=1,
-        anime_source="TestSource",
     )
 
 
@@ -64,8 +62,6 @@ def sample_torrent_list():
             size="1.3 GiB",
             seeders=150,
             leechers=25,
-            anime_id=1,
-            anime_source="TestSource",
         ),
         Torrent(
             torrent_id=2,
@@ -74,8 +70,6 @@ def sample_torrent_list():
             size="800 MiB",
             seeders=80,
             leechers=10,
-            anime_id=1,
-            anime_source="TestSource",
         ),
     ]
 

@@ -41,7 +41,7 @@ class SQLiteTorrentRepository(TorrentRepository):
         """
         self._connection = connection
 
-    def save_batch(self, torrents: Sequence[Torrent]) -> None:
+    def save_batch(self, torrents: Sequence[Torrent], anime_id: int, anime_source: str) -> None:
         """
         Upsert a batch of Torrent records.
 
@@ -53,7 +53,7 @@ class SQLiteTorrentRepository(TorrentRepository):
         """
         if not torrents:
             return
-        params = [torrent_to_params(item) for item in torrents]
+        params = [torrent_to_params(item)+(anime_id, anime_source) for item in torrents]
         try:
             with self._connection:
                 self._connection.executemany(INSERT_SQL, params)

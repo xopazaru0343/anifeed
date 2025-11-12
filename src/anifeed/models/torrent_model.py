@@ -38,5 +38,3 @@ class Torrent:
     size: str
     seeders: int
     leechers: int
-    anime_id: Optional[int] = None
-    anime_source: Optional[str] = None
