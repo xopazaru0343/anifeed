@@ -25,7 +25,7 @@ jobs:
           enable-cache: true
 
       - name: Install dependencies
-        run: uv sync --extra mkdocs
+        run: uv sync --group mkdocs
 
       - name: Build Documentation
         run: uv run mkdocs build --clean

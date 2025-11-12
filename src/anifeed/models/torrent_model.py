@@ -4,7 +4,6 @@ Torrent domain model.
 This module defines the torrent metadata structure retrieved from torrent sites.
 """
 from dataclasses import dataclass
-from typing import Optional
 
 
 @dataclass(frozen=True)

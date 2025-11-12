@@ -9,9 +9,7 @@ persistence-agnostic.
 from __future__ import annotations
 
 from sqlite3 import Row
-from urllib.parse import urljoin
 
-from anifeed.constants import AnimeStatus
 from anifeed.models.anime_model import Anime
 from anifeed.models.torrent_model import Torrent
 

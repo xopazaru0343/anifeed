@@ -14,3 +14,4 @@ database.db
 anilist_subsplease.json
 *.db-wal
 *.db_shm
+src/anifeed/database.db-shm

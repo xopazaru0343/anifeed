@@ -7,7 +7,7 @@ user anime lists.
 import os
 from typing import Dict, Optional
 from enum import EnumType
-import json
+
 from anifeed.services.apis.base_api import BaseApi
 from anifeed.constants import AnimeStatus
 
@@ -93,19 +93,17 @@ class MalApi(BaseApi):
             "nsfw": "true",
             "offset": 0
             }
-        response = dict(data = list())
-        has_paging=True
+        response = dict(data=list())
+        has_paging = True
         while has_paging:
-            size_animelist = len(response["data"])
             r = self.get(f"/users/{username}/animelist", params=payload_dict)
             r.raise_for_status()
             aux = r.json()
             response["data"].extend(aux["data"])
             if aux.get("paging").get("next"):
-                payload_dict["offset"]+=payload_dict["limit"]
+                payload_dict["offset"] += payload_dict["limit"]
             else:
-                has_paging=False
-        
+                has_paging = False
         return response
 
     def _translate_status(self, internal_status: AnimeStatus) -> Optional[str]:
