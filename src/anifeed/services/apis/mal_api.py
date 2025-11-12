@@ -101,7 +101,7 @@ class MalApi(BaseApi):
             r.raise_for_status()
             aux = r.json()
             response["data"].extend(aux["data"])
-            if aux.get("paging") and (len(response["data"]) != size_animelist):
+            if aux.get("paging").get("next"):
                 payload_dict["offset"]+=payload_dict["limit"]
             else:
                 has_paging=False
