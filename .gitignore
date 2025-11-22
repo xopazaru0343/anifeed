@@ -12,6 +12,7 @@ site
 *.egg-info
 database.db
 anilist_subsplease.json
+mal_subsplease.json
 *.db-wal
 *.db_shm
 src/anifeed/database.db-shm
